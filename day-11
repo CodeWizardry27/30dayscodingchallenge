@@ -1,0 +1,30 @@
+Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k.
+
+A subarray is a contiguous non-empty sequence of elements within an array.
+
+
+
+
+
+import java.util.HashMap;
+public class SubarraySum {
+    public int subarraySum(int[] nums, int k) {
+        HashMap<Integer, Integer> sumFrequency = new HashMap<>();
+        int count = 0;
+        int cumulativeSum = 0;
+
+        sumFrequency.put(0, 1);
+
+        for (int num : nums) {
+            cumulativeSum += num;
+
+            if (sumFrequency.containsKey(cumulativeSum - k)) {
+                count += sumFrequency.get(cumulativeSum - k);
+            }
+
+            sumFrequency.put(cumulativeSum, sumFrequency.getOrDefault(cumulativeSum, 0) + 1);
+        }
+
+        return count;
+    }
+}
